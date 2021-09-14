@@ -14,4 +14,4 @@ A exports.h header file will be generated in the input file's directory. This th
 
 ### TODO
 
-- Support for Functions exported only by ordinal with no names
+- Support for functions exported only by ordinal with no names
