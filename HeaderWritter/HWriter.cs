@@ -41,8 +41,17 @@ namespace HeaderWritter
 
                 foreach (var export in image.Exports.exports)
                 {
-                    Console.WriteLine($"Writting {dllName} {export.Name}");
-                    WriteExport(sw, dllNameForward, export.Name, export.Ordinal);
+                    if (export.Name != string.Empty)
+                    {
+                        Console.WriteLine($"Writting {dllName} {export.Name}");
+                        WriteExport(sw, dllNameForward, export.Name, export.Ordinal);
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Warning!!! Unsupported {dllName} Func{export.FuncAddress:X} Ordinal:{export.Ordinal}");
+                        WriteExportUnsupported(sw, dllNameForward, export.Ordinal, export.FuncAddress);
+                    }
+
                 }
             }
 
@@ -67,6 +76,11 @@ namespace HeaderWritter
         private void WriteExport(StreamWriter sw, string originalImageName, string functionName, uint ordinal)
         {
             sw.WriteLine($"#pragma comment(linker,\"/export:{functionName}={originalImageName}.{functionName},@{ordinal}\")");
+        }
+
+        private void WriteExportUnsupported(StreamWriter sw, string originalImageName, uint ordinal, uint functionAddress)
+        {
+            sw.WriteLine($"//UNSUPPORTED FUNCTION EXPORT => #pragma comment(linker,\"/export:NONAME={originalImageName}.func_{functionAddress:X},@{ordinal}\")");
         }
 
     }
