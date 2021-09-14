@@ -11,3 +11,7 @@ A utility tool to create export definitions from a given PE Image.
 
 A exports.h header file will be generated in the input file's directory. This then can be then included in your [C++ DLL project](https://github.com/cihansol/DLLProxyProject).
 
+
+### TODO
+
+- Support for Functions exported only by ordinal with no names
